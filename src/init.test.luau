@@ -362,6 +362,28 @@ return function(x)
 			end, "Migration 1 returned 'nil'")
 		end)
 
+		x.test("passes key to migrations", function(context)
+			local passedKey
+			local collection = context.lapis.createCollection("collection", {
+				defaultData = "newData",
+				migrations = {
+					function(_, key)
+						passedKey = key
+						return "newData"
+					end,
+				},
+			})
+
+			context.write("collection", "key", "data")
+
+			collection:read("key"):expect()
+			assertEqual(passedKey, "key")
+			passedKey = nil
+
+			collection:load("key"):expect()
+			assertEqual(passedKey, "key")
+		end)
+
 		x.test("migrations should allow mutable updates", function(context)
 			local collection = context.lapis.createCollection("collection", {
 				validate = function(value)

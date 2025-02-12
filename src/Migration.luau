@@ -14,7 +14,7 @@ function Migration.getLastCompatibleVersion(migrations)
 	return 0
 end
 
-function Migration.migrate(migrations, value)
+function Migration.migrate(migrations, value, key)
 	local serverVersion = #migrations
 	local savedVersion = value.migrationVersion
 
@@ -23,7 +23,7 @@ function Migration.migrate(migrations, value)
 
 	if serverVersion > savedVersion then
 		for version = savedVersion + 1, #migrations do
-			local ok, migrated = pcall(migrations[version].migrate, data)
+			local ok, migrated = pcall(migrations[version].migrate, data, key)
 			if not ok then
 				return false, `Migration {version} threw an error: {migrated}`
 			end

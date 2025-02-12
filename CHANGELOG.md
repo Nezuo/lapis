@@ -2,6 +2,9 @@
 
 ## Unreleased Changes
 
+## 0.3.4 - February 11, 2025
+* The document's key is now passed as a second argument to migrations.
+
 ## 0.3.3 - August 24, 2024
 * Files now use the `.luau` extension instead of `.lua`. ([#61])
 * Switched wally realm to `shared`. This means Lapis can be used as a shared or server dependency. ([#62])

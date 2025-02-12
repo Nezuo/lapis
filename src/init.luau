@@ -5,7 +5,7 @@ local PromiseTypes = require(script.PromiseTypes)
 
 local internal = Internal.new(true)
 
-type Migrate = (any) -> any
+type Migrate = (data: any, key: string) -> any
 type Migration = Migrate | { backwardsCompatible: boolean?, migrate: Migrate }
 
 export type DataStoreService = {
@@ -63,7 +63,7 @@ local Lapis = {}
 ]=]
 
 --[=[
-	@type Migration (any) -> any | { backwardsCompatible: boolean?, migrate: (any) -> any }
+	@type Migration (data: any, key: string) -> any | { backwardsCompatible: boolean?, migrate: (data: any, key: string) -> any }
 	@within Lapis
 ]=]
 

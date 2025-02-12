@@ -113,7 +113,7 @@ function Collection:load(key, defaultUserIds)
 
 			local savedVersion = value.migrationVersion
 
-			local migrationOk, migrated, lastCompatibleVersion = Migration.migrate(self.options.migrations, value)
+			local migrationOk, migrated, lastCompatibleVersion = Migration.migrate(self.options.migrations, value, key)
 			if not migrationOk then
 				return "fail", Error.new("MigrationError", migrated)
 			end
@@ -187,7 +187,7 @@ function Collection:read(key)
 			return nil
 		end
 
-		local migrationOk, migrated = Migration.migrate(self.options.migrations, value)
+		local migrationOk, migrated = Migration.migrate(self.options.migrations, value, key)
 		if not migrationOk then
 			return Promise.reject(migrated)
 		end
